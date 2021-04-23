@@ -6,6 +6,7 @@ import app.util.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,19 @@ public class ProdutoService {
 
     public void save(Produto produto) throws RecordNotFoundException {
         repository.save(produto);
+    }
+
+    public Produto update(Long id, Produto produto) throws RecordNotFoundException {
+        if (repository.existsById(id)) {
+            produto.setId(id);
+            produto.setTitulo(produto.getTitulo());
+            produto.setDescricao(produto.getDescricao());
+            produto.setStatus(produto.getStatus());
+            produto = repository.save(produto);
+        } else {
+            throw new RecordNotFoundException("ID não encontrado.");
+        }
+        return produto;
     }
 
     public void deleteProdutoById(Long id) throws RecordNotFoundException {

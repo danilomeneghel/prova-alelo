@@ -59,7 +59,7 @@ public class ProdutoController {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 
-		produtoService.save(produto);
+		produtoService.update(id, produto);
 		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
 	}
 
