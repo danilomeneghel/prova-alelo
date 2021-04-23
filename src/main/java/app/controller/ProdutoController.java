@@ -3,6 +3,7 @@ package app.controller;
 import app.entity.Produto;
 import app.service.ProdutoService;
 import app.util.CustomErrorType;
+import app.util.RecordNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ProdutoController {
 
 	@ApiOperation(value = "Lista todos os Produtos")
 	@RequestMapping(value = "/produto", method = RequestMethod.GET)
-	public ResponseEntity<List<Produto>> listAllProdutos(Principal principal) {
+	public ResponseEntity<List<Produto>> listAllProdutos() {
 		List<Produto> produtos = produtoService.findAllByOrderByTituloAsc();
 
 		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
@@ -32,7 +33,7 @@ public class ProdutoController {
 
 	@ApiOperation(value = "Pega um Produto")
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getProduto(@PathVariable("id") Long id) {
+	public ResponseEntity<?> getProduto(@PathVariable("id") Long id) throws RecordNotFoundException {
 		Produto produto = produtoService.findProdutoById(id);
 		if (produto == null) {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
@@ -42,7 +43,7 @@ public class ProdutoController {
 
 	@ApiOperation(value = "Cria o Produto")
 	@RequestMapping(value = "/produto", method = RequestMethod.POST)
-	public ResponseEntity<?> createProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) throws RecordNotFoundException {
 		if (produtoService.isProdutoExist(produto)) {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com titulo " + produto.getTitulo() + " já existe."), HttpStatus.CONFLICT);
 		}
@@ -53,7 +54,7 @@ public class ProdutoController {
 
 	@ApiOperation(value = "Atualiza o Produto")
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateProduto(@PathVariable("id") Long id, @RequestBody Produto produto) {
+	public ResponseEntity<?> updateProduto(@PathVariable("id") Long id, @RequestBody Produto produto) throws RecordNotFoundException {
 		if (produtoService.findProdutoById(id) == null) {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
@@ -64,10 +65,11 @@ public class ProdutoController {
 
 	@ApiOperation(value = "Exclui o Produto")
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteProduto(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteProduto(@PathVariable("id") Long id) throws RecordNotFoundException {
 		if (produtoService.findProdutoById(id) == null) {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
+
 		produtoService.deleteProdutoById(id);
 		return new ResponseEntity<Produto>(HttpStatus.NO_CONTENT);
 	}

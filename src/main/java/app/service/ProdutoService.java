@@ -2,10 +2,12 @@ package app.service;
 
 import app.entity.Produto;
 import app.repository.ProdutoRepository;
+import app.util.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -18,8 +20,14 @@ public class ProdutoService {
         this.repository = repository;
     }
 
-    public Produto findProdutoById(Long id) {
-        return repository.findById(id).orElse(new Produto());
+    public Produto findProdutoById(Long id) throws RecordNotFoundException {
+        Optional<Produto> produto = repository.findById(id);
+
+        if (repository.existsById(id)) {
+            return produto.get();
+        } else {
+            throw new RecordNotFoundException("ID não encontrado.");
+        }
     }
 
     public List<Produto> findAllByOrderByTituloAsc() {
@@ -30,12 +38,16 @@ public class ProdutoService {
         return repository.findByTitulo(titulo);
     }
 
-    public void save(Produto produto) {
+    public void save(Produto produto) throws RecordNotFoundException {
         repository.save(produto);
     }
 
-    public void deleteProdutoById(Long id) {
-        repository.deleteById(id);
+    public void deleteProdutoById(Long id) throws RecordNotFoundException {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("ID não encontrado.");
+        }
     }
 
     public void deleteAllProdutos() {
