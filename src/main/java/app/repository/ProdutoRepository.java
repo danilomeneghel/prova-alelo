@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
 
-    Produto findByTitulo(String titulo);
-    List<Produto> findAllByOrderByTituloAsc();
+    Produto findByNome(String nome);
+    List<Produto> findAllByOrderByNomeAsc();
 
 }

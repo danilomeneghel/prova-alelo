@@ -1,7 +1,6 @@
 package app.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +17,7 @@ public class Produto {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	private String titulo;
+	private String nome;
 
 	private String descricao;
 
@@ -26,10 +25,10 @@ public class Produto {
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
+	private Date dataCriada;
 	
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt;
+	private Date dataAlterada;
 
 }

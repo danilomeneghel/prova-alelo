@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.security.Principal;
 import java.util.List;
 
 @Api(value = "API REST Produto")
@@ -26,7 +25,7 @@ public class ProdutoController {
 	@ApiOperation(value = "Lista todos os Produtos")
 	@RequestMapping(value = "/produto", method = RequestMethod.GET)
 	public ResponseEntity<List<Produto>> listAllProdutos() {
-		List<Produto> produtos = produtoService.findAllByOrderByTituloAsc();
+		List<Produto> produtos = produtoService.findAllByOrderByNomeAsc();
 
 		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
 	}
@@ -45,11 +44,11 @@ public class ProdutoController {
 	@RequestMapping(value = "/produto", method = RequestMethod.POST)
 	public ResponseEntity<?> createProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) throws RecordNotFoundException {
 		if (produtoService.isProdutoExist(produto)) {
-			return new ResponseEntity<Object>(new CustomErrorType("Produto com titulo " + produto.getTitulo() + " já existe."), HttpStatus.CONFLICT);
+			return new ResponseEntity<Object>(new CustomErrorType("Produto com nome " + produto.getNome() + " já existe."), HttpStatus.CONFLICT);
 		}
 
-		produtoService.save(produto);
-		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
+		Produto produtoNovo = produtoService.save(produto);
+		return new ResponseEntity<Produto>(produtoNovo, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Atualiza o Produto")
@@ -59,8 +58,8 @@ public class ProdutoController {
 			return new ResponseEntity<Object>(new CustomErrorType("Produto com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 
-		produtoService.update(id, produto);
-		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+		Produto produtoAlterado = produtoService.update(id, produto);
+		return new ResponseEntity<Produto>(produtoAlterado, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Exclui o Produto")
