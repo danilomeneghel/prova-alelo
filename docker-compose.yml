@@ -1,31 +1,20 @@
-version: "3.7"
-
+version: '2'
 services:
-  postgres:
-    container_name: postgres
-    image: postgres
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      PGDATA: backend/Api/postgres
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-  frontend:
-    container_name: frontend
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    volumes:
-      - '.:/frontend/app'
-    ports:
-      - '4200:4200'
-  backend:
-     container_name: backend
-     build:
-       context: backend
-       dockerfile: Dockerfile
-     volumes:
-       - '.:/backend/app'
-     ports:
-       - '8080:8080'
+  api:
+    build: .
+    ports: 
+      - "8080:8080"
+  #oracle:
+    #image: "bofm/oracle12c"
+    #restart: "unless-stopped"
+    #ports:
+        #- 1521:1521
+        #- 5500:5500
+    #volumes:
+        #- ./setup-scripts:/opt/oracle/scripts/setup
+        #- ./dump:/opt/oracle/dump
+    #environment: 
+        #- "ORACLE_USER=oracle"
+        #- "ORACLE_PWD=oracle"
+        #- "ORACLE_DATABASE=ORCL"
+        #- "SOURCE_SCHEMA=ORCL"

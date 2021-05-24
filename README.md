@@ -50,7 +50,7 @@ http://localhost:8080/api/produto
 ## Docker
 
 ```
-docker-compose up --build
+docker-compose up
 ```
 
 ## Swagger 
