@@ -50,7 +50,8 @@ http://localhost:8080/api/produto
 ## Docker
 
 ```
-docker-compose up
+$ mvn package
+$ docker-compose up
 ```
 
 ## Swagger 
