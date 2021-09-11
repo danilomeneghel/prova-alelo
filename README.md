@@ -44,7 +44,11 @@ Aguarde carregar todo o serviço web. <br>
 Após concluído, digite o endereço abaixo em seu navegador, nele será listado os produtos 
 cadastrados na API. <br>
 
+<<<<<<< HEAD
 http://localhost:8080/produtos
+=======
+http://localhost:8080/api/produto
+>>>>>>> 45963ebb30d626bf01b8dcc90140df11824cc0c0
 
 
 ## Docker
