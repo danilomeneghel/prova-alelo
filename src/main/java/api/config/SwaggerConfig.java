@@ -1,4 +1,4 @@
-package app.config;
+package api.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -17,16 +17,16 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	@Bean
-    public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
-        .apiInfo(getApiInfo())	  
-        .select()
-        .apis(RequestHandlerSelectors.basePackage("app"))
-        .paths(PathSelectors.any())
-        .build();
+    @Bean
+    public Docket api() {
+        return new Docket( DocumentationType.SWAGGER_2 )
+                .apiInfo( getApiInfo() )
+                .select()
+                .apis( RequestHandlerSelectors.basePackage( "api" ) )
+                .paths( PathSelectors.any() )
+                .build();
     }
-    
+
     private ApiInfo getApiInfo() {
 
         ApiInfo apiInfo = new ApiInfo(
@@ -34,7 +34,7 @@ public class SwaggerConfig {
                 "Sistema de Cadastro",
                 "1.1",
                 "",
-                new Contact("Java-Spring-Boot", "", ""),
+                new Contact( "Java-Spring-Boot", "", "" ),
                 "Danilo Meneghel",
                 "http://danilomeneghel.github.io", new ArrayList<>()
         );
