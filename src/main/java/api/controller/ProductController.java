@@ -4,6 +4,7 @@ import api.entity.Product;
 import api.exception.CustomErrorType;
 import api.exception.RecordNotFoundException;
 import api.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping( "/products" )
+@Api( value = "API REST Produtos", tags = "products" )
 public class ProductController {
 
     @Autowired
