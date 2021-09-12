@@ -1,6 +1,9 @@
 package api.controller;
 
-import io.swagger.annotations.Api;
+import api.entity.Product;
+import api.exception.CustomErrorType;
+import api.exception.RecordNotFoundException;
+import api.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import api.entity.Product;
-import api.service.ProductService;
-import api.util.CustomErrorType;
-import api.util.RecordNotFoundException;
-
-@Api( value = "API REST Produtos", tags = "products" )
 @RestController
 @RequestMapping( "/products" )
 public class ProductController {
@@ -37,7 +34,7 @@ public class ProductController {
         return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Pega um Product" )
+    @ApiOperation( value = "Pega um Produto" )
     @GetMapping( value = "/{id}" )
     public ResponseEntity< Product > getProductById( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
         Product product = productService.findProductById( id );
@@ -46,16 +43,18 @@ public class ProductController {
         return new ResponseEntity< Product >( product, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Cria o Product" )
+    @ApiOperation( value = "Cria o Produto" )
     @PostMapping
-    public ResponseEntity< Product > createProduct( @RequestBody Product product ) throws RecordNotFoundException {
-        validateProductByName( product );
+    public ResponseEntity< Object > createProduct( @RequestBody Product product ) throws RecordNotFoundException {
+        if( productService.isProductExist( product ) ) {
+            return new ResponseEntity< Object >( new CustomErrorType( "Produto com nome " + product.getName() + " já existe." ), HttpStatus.CONFLICT );
+        }
         Product newProduct = productService.save( product );
 
-        return new ResponseEntity< Product >( newProduct, HttpStatus.CREATED );
+        return new ResponseEntity< Object >( newProduct, HttpStatus.CREATED );
     }
 
-    @ApiOperation( value = "Atualiza o Product" )
+    @ApiOperation( value = "Atualiza o Produto" )
     @PutMapping( value = "/{id}" )
     public ResponseEntity< Product > updateProduct( @PathVariable( "id" ) Long id, @RequestBody Product product ) throws RecordNotFoundException {
         validateProductPorId( id );
@@ -64,7 +63,7 @@ public class ProductController {
         return new ResponseEntity< Product >( changedProduct, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Exclui o Product" )
+    @ApiOperation( value = "Exclui o Produto" )
     @DeleteMapping( value = "/{id}" )
     public ResponseEntity< Product > deleteProduct( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
         validateProductPorId( id );
@@ -76,13 +75,6 @@ public class ProductController {
     public ResponseEntity< Object > validateProductPorId( Long id ) throws RecordNotFoundException {
         if( productService.findProductById( id ) == null ) {
             return new ResponseEntity< Object >( new CustomErrorType( "Produto com id " + id + " não encontrado." ), HttpStatus.NOT_FOUND );
-        }
-        return null;
-    }
-
-    public ResponseEntity< Object > validateProductByName( Product product ) {
-        if( productService.isProductExist( product ) ) {
-            return new ResponseEntity< Object >( new CustomErrorType( "Produto com nome " + product.getName() + " já existe." ), HttpStatus.CONFLICT );
         }
         return null;
     }

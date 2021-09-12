@@ -1,11 +1,10 @@
 package api.repository;
 
+import api.entity.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import api.entity.Product;
 
 @Repository
 public interface ProductRepository extends CrudRepository< Product, Long > {
