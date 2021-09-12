@@ -1,13 +1,14 @@
 package api.service;
 
-import api.entity.Product;
-import api.repository.ProductRepository;
-import api.util.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import api.entity.Product;
+import api.repository.ProductRepository;
+import api.util.RecordNotFoundException;
 
 @Service
 public class ProductService {
