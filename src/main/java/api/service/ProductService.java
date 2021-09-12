@@ -13,17 +13,12 @@ import java.util.Optional;
 public class ProductService {
 
     @Autowired
-    private final ProductRepository repository;
-
-    @Autowired
-    public ProductService( ProductRepository repository ) {
-        this.repository = repository;
-    }
+    private ProductRepository productRepository;
 
     public Product findProductById( Long id ) throws RecordNotFoundException {
-        Optional< Product > product = repository.findById( id );
+        Optional< Product > product = productRepository.findById( id );
 
-        if( repository.existsById( id ) ) {
+        if( productRepository.existsById( id ) ) {
             return product.get();
         } else {
             throw new RecordNotFoundException( "ID não encontrado." );
@@ -31,24 +26,24 @@ public class ProductService {
     }
 
     public List< Product > findAllByOrderByNameAsc() {
-        return repository.findAllByOrderByNameAsc();
+        return productRepository.findAllByOrderByNameAsc();
     }
 
     public Product findByName( String name ) {
-        return repository.findByName( name );
+        return productRepository.findByName( name );
     }
 
     public Product save( Product product ) {
-        return repository.save( product );
+        return productRepository.save( product );
     }
 
     public Product update( Long id, Product product ) throws RecordNotFoundException {
-        if( repository.existsById( id ) ) {
+        if( productRepository.existsById( id ) ) {
             product.setId( id );
             product.setName( product.getName() );
             product.setDescription( product.getDescription() );
             product.setStatus( product.getStatus() );
-            product = repository.save( product );
+            product = productRepository.save( product );
         } else {
             throw new RecordNotFoundException( "ID não encontrado." );
         }
@@ -56,15 +51,15 @@ public class ProductService {
     }
 
     public void deleteProductById( Long id ) throws RecordNotFoundException {
-        if( repository.existsById( id ) ) {
-            repository.deleteById( id );
+        if( productRepository.existsById( id ) ) {
+            productRepository.deleteById( id );
         } else {
             throw new RecordNotFoundException( "ID não encontrado." );
         }
     }
 
     public void deleteAllProducts() {
-        repository.deleteAll();
+        productRepository.deleteAll();
     }
 
     public boolean isProductExist( Product product ) {

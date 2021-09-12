@@ -32,4 +32,8 @@ public class Product {
     @Temporal( TemporalType.TIMESTAMP )
     private Date updatedAt;
 
+    public Product() {
+        super();
+    }
+
 }

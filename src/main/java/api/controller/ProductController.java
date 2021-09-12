@@ -79,7 +79,7 @@ public class ProductController {
         return null;
     }
 
-    public ResponseEntity< Object > validateProductByName( Product product ) throws RecordNotFoundException {
+    public ResponseEntity< Object > validateProductByName( Product product ) {
         if( productService.isProductExist( product ) ) {
             return new ResponseEntity< Object >( new CustomErrorType( "Produto com nome " + product.getName() + " já existe." ), HttpStatus.CONFLICT );
         }

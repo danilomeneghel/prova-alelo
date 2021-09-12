@@ -49,6 +49,7 @@ http://localhost:8080/products
 ## Docker
 
 ```
+$ mvn package
 $ docker-compose up
 ```
 
