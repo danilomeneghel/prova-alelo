@@ -31,8 +31,8 @@ public class Product {
     private Long id;
 
     @ApiModelProperty( required = true, notes = "Max Length: 35" )
-    @NotBlank( message = "{required.field}" )
-    @Length( max = 35, message = "{invalid.field}" )
+    @NotBlank( message = "Required Field" )
+    @Length( max = 35, message = "Invalid Field" )
     private String name;
 
     private String description;
