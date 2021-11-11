@@ -3,7 +3,7 @@ services:
   api:
     build: .
     ports: 
-      - "8080:8080"
+      - "8181:8181"
   #oracle:
     #image: "bofm/oracle12c"
     #restart: "unless-stopped"

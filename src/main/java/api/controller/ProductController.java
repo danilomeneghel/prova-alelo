@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.entity.Product;
+import api.enums.ProductStatus;
 import api.exception.CustomErrorType;
 import api.exception.RecordNotFoundException;
 import api.service.ProductService;
@@ -32,6 +33,14 @@ public class ProductController {
     @GetMapping
     public ResponseEntity< List< Product > > listProducts() {
         List< Product > products = productService.findAllByOrderByNameAsc();
+
+        return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
+    }
+
+    @ApiOperation( value = "Lista os Produtos por Status" )
+    @GetMapping( value = "/status/{status}" )
+    public ResponseEntity< List< Product > > listProductsByStatus( @PathVariable( "status" ) String status ) {
+        List< Product > products = productService.findAllByStatusOrderByNameAsc( ProductStatus.fromValue( status ) );
 
         return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
     }

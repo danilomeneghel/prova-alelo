@@ -1,6 +1,7 @@
 package api.service;
 
 import api.entity.Product;
+import api.enums.ProductStatus;
 import api.exception.RecordNotFoundException;
 import api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,16 @@ public class ProductService {
 
         if( productRepository.existsById( id ) ) {
             return product.get();
-        } else {
-            throw new RecordNotFoundException( "ID não encontrado." );
         }
+        throw new RecordNotFoundException( "ID não encontrado." );
     }
 
     public List< Product > findAllByOrderByNameAsc() {
         return productRepository.findAllByOrderByNameAsc();
+    }
+
+    public List< Product > findAllByStatusOrderByNameAsc( ProductStatus status ) {
+        return productRepository.findAllByStatusOrderByNameAsc( status );
     }
 
     public Product findByName( String name ) {
@@ -44,10 +48,9 @@ public class ProductService {
             product.setDescription( product.getDescription() );
             product.setStatus( product.getStatus() );
             product = productRepository.save( product );
-        } else {
-            throw new RecordNotFoundException( "ID não encontrado." );
+            return product;
         }
-        return product;
+        throw new RecordNotFoundException( "ID não encontrado." );
     }
 
     public void deleteProductById( Long id ) throws RecordNotFoundException {

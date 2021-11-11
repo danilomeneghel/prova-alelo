@@ -6,13 +6,15 @@ Avaliação técnica de uma API de Cadastro de Produto, desenvolvido em Java com
 
 - CRUD
 - API RESTful
+- Validation
+- Enum
 - JUnit
-- Mockito
+- MockMVC
 
 ## Requisitos
 
 - Java JDK 11
-- Apache Maven >= 3.6.3
+- Apache Maven >= 3.6.3 (Opcional)
 - Docker (Opcional)
 
 ## Tecnologias
@@ -36,19 +38,19 @@ $ cd prova-alelo/
 Para carregar o projeto, digite no terminal:
 
 ```
-$ mvn spring-boot:run
+$ ./mvnw spring-boot:run
 ```
 
 Aguarde carregar todo o serviço web. <br>
 Após concluído, digite o endereço abaixo em seu navegador, nele será listado os produtos 
 cadastrados na API. <br>
 
-http://localhost:8080/products
+http://localhost:8181/products
 
 ## Docker
 
 ```
-$ mvn package
+$ ./mvnw package
 $ docker-compose up
 ```
 
@@ -56,7 +58,7 @@ $ docker-compose up
 
 Documentação da API RESTful: <br>
 
-http://localhost:8080/swagger-ui.html
+http://localhost:8181/swagger-ui.html
 
 ## Licença
 
@@ -67,7 +69,7 @@ Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
 Para realizar os testes, execute o seguinte comando no terminal:
 
 ```
-$ mvn test
+$ ./mvnw test
 ```
 
 
