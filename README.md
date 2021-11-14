@@ -8,7 +8,6 @@ Avaliação técnica de uma API de Cadastro de Produto, desenvolvido em Java com
 - API RESTful
 - Validation
 - Enum
-- JUnit
 - MockMVC
 
 ## Requisitos
@@ -23,8 +22,11 @@ Avaliação técnica de uma API de Cadastro de Produto, desenvolvido em Java com
 - JPA
 - Maven
 - Spring
+- Lombok
 - Swagger
 - H2
+- JUnit
+- SonarQube
 - Docker
 
 ## Instalação
@@ -49,6 +51,8 @@ http://localhost:8181/products
 
 ## Docker
 
+Para rodar o projeto via Docker, bastar executar o seguinte comando:
+
 ```
 $ docker-compose up
 ```
@@ -58,6 +62,10 @@ $ docker-compose up
 Documentação da API RESTful: <br>
 
 http://localhost:8181/swagger-ui.html
+
+## SonarQube
+
+http://localhost:7000
 
 ## Licença
 
