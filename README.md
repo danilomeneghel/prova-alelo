@@ -50,7 +50,6 @@ http://localhost:8181/products
 ## Docker
 
 ```
-$ ./mvnw package
 $ docker-compose up
 ```
 
