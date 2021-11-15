@@ -65,7 +65,15 @@ http://localhost:8181/swagger-ui.html
 
 ## SonarQube
 
-http://localhost:7000
+Para verificar a cobertura de testes, execute o seguinte comando: 
+
+```
+$ ./mvnw clean install sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=YOUR_TOKEN
+```
+
+Após executado, acesse o seguinte endereço: <br>
+
+http://localhost:9000/dashboard?id=api%3Aprova-alelo
 
 ## Licença
 

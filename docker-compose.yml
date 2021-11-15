@@ -9,7 +9,7 @@ services:
     container_name: sonarqube8
     image: sonarqube:8.4.1-community
     ports:
-      - "7000:9000"
+      - "9000:9000"
   #oracle:
     #image: "bofm/oracle12c"
     #restart: "unless-stopped"
