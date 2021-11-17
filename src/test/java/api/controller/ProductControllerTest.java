@@ -1,8 +1,9 @@
 package api.controller;
 
 import api.ApplicationTests;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,12 +18,13 @@ public class ProductControllerTest extends ApplicationTests {
     @Autowired
     private ProductController productController;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.mockMvc = MockMvcBuilders.standaloneSetup( productController ).build();
     }
 
     @Test
+    @DisplayName("Test POST Product")
     public void testPOSTProduct() throws Exception {
         String data = "{\"id\": \"1\", \"name\": \"Produto 01\", \"description\": \"Descrição Teste\", \"status\": \"ATIVO\"}";
 
@@ -34,12 +36,14 @@ public class ProductControllerTest extends ApplicationTests {
     }
 
     @Test
+    @DisplayName("Test GET All Products")
     public void testGETProducts() throws Exception {
         this.mockMvc.perform( MockMvcRequestBuilders.get( "/products" ) )
                 .andExpect( MockMvcResultMatchers.status().isOk() );
     }
 
     @Test
+    @DisplayName("Test GET Product")
     public void testGETProduct() throws Exception {
         String data = "{\"id\": \"2\", \"name\": \"Produto 02\", \"description\": \"Descrição Teste\", \"status\": \"ATIVO\"}";
 
@@ -54,6 +58,7 @@ public class ProductControllerTest extends ApplicationTests {
     }
 
     @Test
+    @DisplayName("Test PUT Product")
     public void testPUTProduct() throws Exception {
         String created = "{\"id\": \"3\", \"name\": \"Produto 03\", \"description\": \"Descrição Teste\", \"status\": \"ATIVO\"}";
 
@@ -73,6 +78,7 @@ public class ProductControllerTest extends ApplicationTests {
     }
 
     @Test
+    @DisplayName("Test DELETE Product")
     public void testDELETEProduct() throws Exception {
         String data = "{\"id\": \"1\", \"name\": \"Produto 04\", \"description\": \"Descrição Teste\", \"status\": \"ATIVO\"}";
 

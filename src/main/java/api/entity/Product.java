@@ -1,12 +1,10 @@
 package api.entity;
 
 import api.enums.ProductStatus;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,14 +28,11 @@ public class Product {
     @Column( name = "id", unique = true, nullable = false )
     private Long id;
 
-    @ApiModelProperty( required = true, notes = "Max Length: 35" )
     @NotBlank( message = "Required Field" )
-    @Length( max = 35, message = "Invalid Field" )
     private String name;
 
     private String description;
 
-    @ApiModelProperty( value = "ATIVO", allowableValues = "ATIVO, INATIVO" )
     private ProductStatus status;
 
     @CreationTimestamp

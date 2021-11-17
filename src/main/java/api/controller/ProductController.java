@@ -5,8 +5,6 @@ import api.enums.ProductStatus;
 import api.exception.CustomErrorType;
 import api.exception.RecordNotFoundException;
 import api.service.ProductService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +23,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping( "/products" )
-@Api( value = "API REST Produtos", tags = "products" )
 @Validated
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
-    @ApiOperation( value = "Lista todos os Produtos" )
     @GetMapping
     public ResponseEntity< List< Product > > listProducts() {
         List< Product > products = productService.findAllByOrderByNameAsc();
@@ -40,7 +36,6 @@ public class ProductController {
         return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Lista os Produtos por Status" )
     @GetMapping( value = "/status/{status}" )
     public ResponseEntity< List< Product > > listProductsByStatus( @PathVariable( "status" ) String status ) {
         List< Product > products = productService.findAllByStatusOrderByNameAsc( ProductStatus.fromValue( status ) );
@@ -48,7 +43,6 @@ public class ProductController {
         return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Pega um Produto" )
     @GetMapping( value = "/{id}" )
     public ResponseEntity< Product > getProductById( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
         Product product = productService.findProductById( id );
@@ -57,7 +51,6 @@ public class ProductController {
         return new ResponseEntity< Product >( product, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Cria o Produto" )
     @PostMapping
     public ResponseEntity< Object > createProduct( @Valid @RequestBody Product product ) throws RecordNotFoundException {
         if( productService.isProductExist( product ) ) {
@@ -68,7 +61,6 @@ public class ProductController {
         return new ResponseEntity< Object >( newProduct, HttpStatus.CREATED );
     }
 
-    @ApiOperation( value = "Atualiza o Produto" )
     @PutMapping( value = "/{id}" )
     public ResponseEntity< Product > updateProduct( @PathVariable( "id" ) Long id, @Valid @RequestBody Product product ) throws RecordNotFoundException {
         validateProductPorId( id );
@@ -77,7 +69,6 @@ public class ProductController {
         return new ResponseEntity< Product >( changedProduct, HttpStatus.OK );
     }
 
-    @ApiOperation( value = "Exclui o Produto" )
     @DeleteMapping( value = "/{id}" )
     public ResponseEntity< Product > deleteProduct( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
         validateProductPorId( id );
