@@ -19,7 +19,7 @@ public class ProductService {
     public Product findProductById( Long id ) throws RecordNotFoundException {
         Optional< Product > product = productRepository.findById( id );
 
-        if( productRepository.existsById( id ) ) {
+        if( product.isPresent() ) {
             return product.get();
         }
         throw new RecordNotFoundException( "ID não encontrado." );
