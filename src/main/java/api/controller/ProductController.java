@@ -33,14 +33,14 @@ public class ProductController {
     public ResponseEntity< List< Product > > listProducts() {
         List< Product > products = productService.findAllByOrderByNameAsc();
 
-        return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
+        return new ResponseEntity< >( products, HttpStatus.OK );
     }
 
     @GetMapping( value = "/status/{status}" )
     public ResponseEntity< List< Product > > listProductsByStatus( @PathVariable( "status" ) String status ) {
         List< Product > products = productService.findAllByStatusOrderByNameAsc( ProductStatus.fromValue( status ) );
 
-        return new ResponseEntity< List< Product > >( products, HttpStatus.OK );
+        return new ResponseEntity< >( products, HttpStatus.OK );
     }
 
     @GetMapping( value = "/{id}" )
@@ -48,7 +48,7 @@ public class ProductController {
         Product product = productService.findProductById( id );
         validateProductPorId( id );
 
-        return new ResponseEntity< Product >( product, HttpStatus.OK );
+        return new ResponseEntity< >( product, HttpStatus.OK );
     }
 
     @PostMapping
@@ -58,7 +58,7 @@ public class ProductController {
         }
         Product newProduct = productService.save( product );
 
-        return new ResponseEntity< Object >( newProduct, HttpStatus.CREATED );
+        return new ResponseEntity< >( newProduct, HttpStatus.CREATED );
     }
 
     @PutMapping( value = "/{id}" )
@@ -66,20 +66,20 @@ public class ProductController {
         validateProductPorId( id );
         Product changedProduct = productService.update( id, product );
 
-        return new ResponseEntity< Product >( changedProduct, HttpStatus.OK );
+        return new ResponseEntity< >( changedProduct, HttpStatus.OK );
     }
 
     @DeleteMapping( value = "/{id}" )
-    public ResponseEntity< Product > deleteProduct( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
+    public ResponseEntity< String > deleteProduct( @PathVariable( "id" ) Long id ) throws RecordNotFoundException {
         validateProductPorId( id );
-        productService.deleteProductById( id );
+        String deteleProduct = productService.deleteProductById( id );
 
-        return new ResponseEntity< Product >( HttpStatus.NO_CONTENT );
+        return new ResponseEntity< >( deteleProduct, HttpStatus.OK );
     }
 
     public ResponseEntity< Object > validateProductPorId( Long id ) throws RecordNotFoundException {
         if( productService.findProductById( id ) == null ) {
-            return new ResponseEntity< Object >( new CustomErrorType( "Produto com id " + id + " não encontrado." ), HttpStatus.NOT_FOUND );
+            return new ResponseEntity< >( new CustomErrorType( "Produto com id " + id + " não encontrado." ), HttpStatus.NOT_FOUND );
         }
         return null;
     }

@@ -53,9 +53,10 @@ public class ProductService {
         throw new RecordNotFoundException( "ID não encontrado." );
     }
 
-    public void deleteProductById( Long id ) throws RecordNotFoundException {
+    public String deleteProductById( Long id ) throws RecordNotFoundException {
         if( productRepository.existsById( id ) ) {
             productRepository.deleteById( id );
+            return "Produto excluído com sucesso.";
         } else {
             throw new RecordNotFoundException( "ID não encontrado." );
         }
