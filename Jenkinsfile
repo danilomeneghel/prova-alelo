@@ -10,14 +10,13 @@ pipeline {
        stage('Build') {
            steps {
               echo "Starting the build"
-              echo "PATH is: $PATH"
               sh "/usr/bin/docker-compose up"
            }
        }
    }
    post {
       always {
-         sh "docker-compose down || true"
+         sh "/usr/bin/docker-compose down || true"
       }
    }   
 }

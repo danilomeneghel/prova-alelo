@@ -9,7 +9,3 @@ RUN mvn clean package
 
 # set the startup command to execute the jar
 CMD ["java", "-jar", "target/prova-alelo-2.1.jar"]
-
-# install image docker-compose
-RUN aptitude -y install docker-compose
-RUN ln -s /usr/local/bin/docker-compose /compose/docker-compose
