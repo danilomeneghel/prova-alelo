@@ -1,13 +1,18 @@
 pipeline {
 
+   environment {
+        PATH = "$PATH:/usr/local/bin"
+   }
+   
    agent any
 
    stages {
        stage('Build') {
            steps {
               echo "Starting the build"
-              sh "docker-compose build"
-              sh "docker-compose up -d"
+              echo "PATH is: $PATH"
+              sh "/usr/local/bin/docker-compose build"
+              sh "/usr/local/bin/docker-compose up"
            }
        }
    }
