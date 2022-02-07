@@ -19,16 +19,10 @@ pipeline {
               sh "./mvnw test"
            }
        }
-       stage('Build') {
-           steps {
-              echo "Starting the Build"
-              sh "./mvnw package"
-           }
-       }
        stage('Deploy') {
            steps {
-              echo "Starting the Deploy"
-              sh "./mvnw spring-boot:run"
+              echo "Starting the Build"
+              sh "docker-compose up"
            }
        }
    }
