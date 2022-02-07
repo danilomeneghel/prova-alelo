@@ -21,8 +21,7 @@ pipeline {
        }
        stage('Docker-Compose') {
        	   steps {
-       	      echo "Install docker-compose"
-       	      sh "apt-get install docker-compose"
+       	      echo "Verify docker-compose"
        	      sh "chmod +x /usr/bin/docker-compose"
        	      sh "docker-compose --version"
        	   }
