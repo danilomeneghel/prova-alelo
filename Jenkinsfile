@@ -16,7 +16,7 @@ pipeline {
        stage('Build') {
            steps {
               echo "Starting the Build"
-              sh "./deploy.sh"
+              sh "sudo ./deploy.sh"
            }
        }
    }
