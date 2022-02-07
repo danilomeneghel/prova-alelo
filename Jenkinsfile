@@ -3,8 +3,9 @@ pipeline {
    agent any
 
    stages {
-       stage('Teste') {
+       stage('Build') {
            steps {
+              echo "Starting the build"
               sh "docker-compose build"
               sh "docker-compose up -d"
            }
