@@ -7,10 +7,16 @@ pipeline {
    agent any
 
    stages {
+       stage('Checkout') {
+           steps {
+              echo "Starting the Checkout"
+              git url: "https://github.com/danilomeneghel/prova-alelo.git"
+           }
+       }
        stage('Build') {
            steps {
-              echo "Starting the build"
-              sh "./docker-compose up"
+              echo "Starting the Build"
+              sh "./deploy.sh"
            }
        }
    }
