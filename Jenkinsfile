@@ -1,10 +1,9 @@
-#!/usr/bin/env groovy
 pipeline {
 
    agent any
 
    stages {
-       stage('docker-compose') {
+       stage('Teste') {
            steps {
               sh "docker-compose build"
               sh "docker-compose up -d"
