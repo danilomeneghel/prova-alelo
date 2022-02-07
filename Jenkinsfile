@@ -1,14 +1,19 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent none
-    stages {
-        stage('Build') {
-            agent {
-                docker { image 'maven' }
-            }
-            steps {
-                sh "mvn package -Dmaven.test.skip=true"
-            }
-        }
-    }
+
+   agent any
+
+   stages {
+       stage('docker-compose') {
+           steps {
+              sh "docker-compose build"
+              sh "docker-compose up -d"
+           }
+       }
+   }
+   post {
+      always {
+         sh "docker-compose down || true"
+      }
+   }   
 }
