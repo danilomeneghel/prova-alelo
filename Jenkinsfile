@@ -13,9 +13,21 @@ pipeline {
               git url: "https://github.com/danilomeneghel/prova-alelo.git"
            }
        }
+       stage('Test') {
+           steps {
+              echo "Starting the Test"
+              sh "./mvnw test"
+           }
+       }
        stage('Build') {
            steps {
               echo "Starting the Build"
+              sh "./mvnw package"
+           }
+       }
+       stage('Deploy') {
+           steps {
+              echo "Starting the Deploy"
               sh "./mvnw spring-boot:run"
            }
        }
