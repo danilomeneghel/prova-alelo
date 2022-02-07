@@ -22,7 +22,6 @@ pipeline {
        stage('Docker-Compose') {
        	   steps {
        	      echo "Verify docker-compose"
-       	      sh "chmod +x /usr/bin/docker-compose"
        	      sh "docker-compose --version"
        	   }
        }
@@ -35,7 +34,7 @@ pipeline {
    }
    post {
       always {
-         sh "./docker-compose down || true"
+         sh "docker-compose down || true"
       }
    }   
 }
