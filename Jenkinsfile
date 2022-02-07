@@ -22,7 +22,7 @@ pipeline {
        stage('Docker-Compose') {
        	   steps {
        	      echo "Install docker-compose"
-       	      sh "sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose"
+       	      sh "sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -o /usr/bin/docker-compose"
        	      sh "sudo chmod +x /usr/local/bin/docker-compose"
        	      sh "docker-compose --version"
        	   }
