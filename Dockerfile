@@ -7,8 +7,5 @@ COPY ./ ./
 # package our application code
 RUN mvn clean package
 
-# test
-RUN mvn test
-
 # set the startup command to execute the jar
 CMD ["java", "-jar", "target/prova-alelo-2.1.jar"]
