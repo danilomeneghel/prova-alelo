@@ -1,6 +1,10 @@
 pipeline {
 
-   agent any
+   agent { dockerfile true }
+  
+   environment {
+	ENV = 'development'
+   }
 
    stages {
        stage('Checkout') {
