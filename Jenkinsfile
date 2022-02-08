@@ -1,16 +1,13 @@
 pipeline {
 
-   environment {
-        PATH = "$PATH:/usr/bin"
-   }
-   
    agent any
 
    stages {
        stage('Checkout') {
            steps {
               echo "Starting the Checkout"
-              git url: "https://github.com/danilomeneghel/prova-alelo.git"
+              sh "git clone https://github.com/danilomeneghel/prova-alelo.git"
+              sh "cd ./prova-alelo"
            }
        }
        stage('Test') {
@@ -19,22 +16,17 @@ pipeline {
               sh "./mvnw test"
            }
        }
-       stage('Docker-Compose') {
+       stage('Docker Build') {
        	   steps {
-       	      echo "Verify docker-compose"
-       	      sh "docker-compose --version"
+       	      echo "Starting the Build"
+       	      sh "docker build -t api ."
        	   }
        }
-       stage('Deploy') {
+       stage('Docker Run') {
            steps {
-              echo "Starting the Build"
-              sh "docker-compose up"
+              echo "Starting the Deploy"
+              sh "docker run -p 8181:8181 -d api"
            }
        }
-   }
-   post {
-      always {
-         sh "docker-compose down || true"
-      }
-   }   
+   } 
 }
