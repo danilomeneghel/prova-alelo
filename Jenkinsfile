@@ -7,13 +7,7 @@ pipeline {
            steps {
               echo "Starting the Checkout"
               sh "git clone https://github.com/danilomeneghel/prova-alelo.git"
-              sh "cd ./prova-alelo"
-           }
-       }
-       stage('Test') {
-           steps {
-              echo "Starting the Test"
-              sh "./mvnw test"
+              sh "cd prova-alelo"
            }
        }
        stage('Docker Build') {

@@ -34,8 +34,10 @@ Avaliação técnica de uma API de Cadastro de Produto, desenvolvido em Java com
 ```
 $ git clone https://github.com/danilomeneghel/prova-alelo.git
 
-$ cd prova-alelo/
+$ cd prova-alelo
 ```
+
+## Maven
 
 Para carregar o projeto, digite no terminal:
 
@@ -52,6 +54,13 @@ http://localhost:8181/products
 ## Docker
 
 Para rodar o projeto via Docker, bastar executar o seguinte comando:
+
+```
+$ docker build -t projeto .
+$ docker run -p 8181:8181 -d projeto
+```
+
+Ou via Docker-Compose:
 
 ```
 $ docker-compose up
@@ -75,9 +84,10 @@ Após executado, acesse o seguinte endereço: <br>
 
 http://localhost:9000/dashboard?id=api%3Aprova-alelo
 
-## Licença
+## Jenkins
 
-Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
+Crie um novo Job do tipo Pipeline, depois escolha "Pipeline script from SCM", em seguida Git e adicione a url do projeto Git com o arquivo Jenkinsfile marcado.
+Depois clique em Construir (build) para carregar a aplicação.
 
 ## Testes
 
@@ -86,6 +96,10 @@ Para realizar os testes, execute o seguinte comando no terminal:
 ```
 $ ./mvnw test
 ```
+
+## Licença
+
+Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
 
 
 Desenvolvido por<br>
