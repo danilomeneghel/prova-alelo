@@ -13,7 +13,7 @@ rm -rf openjdk-11.0.3.tar.gz
 ENV JAVA_HOME /usr/local/java-11-openjdk-11
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 
-RUN chmod +x /opt/sonarqube/bin/linux-x86-64/sonar.sh
+RUN chmod +x -R /opt/sonarqube/bin/
 
 RUN chmod +x start.sh
 
@@ -24,7 +24,7 @@ EXPOSE 9000
 CMD /user/app/start.sh ; sleep infinity
 
 # select image maven
-FROM maven:3.6.3-jdk-11-slim
+FROM maven:3.6.3-slim
 
 # copy the source tree and the pom.xml to our new container
 COPY ./ ./
