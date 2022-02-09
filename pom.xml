@@ -78,10 +78,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-resources-plugin</artifactId>
 			    <version>3.1.0</version>
@@ -99,16 +95,6 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
-				<configuration>
-				    <skip>${maven.test.skip}</skip>
-				    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-				    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-				    <output>file</output>
-				    <append>true</append>
-				    <excludes>
-					<exclude>*MethodAccess</exclude>
-				    </excludes>
-				</configuration>
 				<executions>
 				    <execution>
 					<id>jacoco-initialize</id>
@@ -126,10 +112,6 @@
 				    </execution>
 				</executions>
 			</plugin>
-			<plugin>
-            			<artifactId>maven-surefire-plugin</artifactId>
-            			<version>2.22.2</version>
-        		</plugin>
 		</plugins>
 	</build>
 </project>
