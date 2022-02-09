@@ -1,9 +1,7 @@
 # select image sonarqube
 FROM openjdk:11-jre-slim
 
-RUN apt-get update 
-    && apt-get install -y curl gnupg2 unzip 
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl gnupg2 unzip
 
 ENV SONAR_VERSION=7.9.6 
     SONARQUBE_HOME=/opt/sonarqube 
