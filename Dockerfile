@@ -1,12 +1,27 @@
 # select image sonarqube
-FROM docker.io/sonarqube:8.9.2-community
+FROM sonarqube:7.8-community
 
-ENV CUSTOM_PLUGINS_DIR=/opt/sonarqube/extensions/plugins
+COPY plugins /opt/sonarqube/extensions/plugins
+COPY openjdk-11.0.3.tar.gz .
 
-ADD https://github.com/rht-labs/sonar-auth-openshift/releases/download/v1.2.0/sonar-auth-openshift-plugin.jar ${CUSTOM_PLUGINS_DIR}
-ADD https://github.com/dmeiners88/sonarqube-prometheus-exporter/releases/download/v1.0.0-SNAPSHOT-2018-07-04/sonar-prometheus-exporter-1.0.0-SNAPSHOT.jar ${CUSTOM_PLUGINS_DIR}
+USER root
 
-RUN chmod -R a+rx ${CUSTOM_PLUGINS_DIR}
+RUN \
+tar -xvzf openjdk-11.0.3.tar.gz -C /usr/local && \ 
+rm -rf openjdk-11.0.3.tar.gz 
+
+ENV JAVA_HOME /usr/local/java-11-openjdk-11
+ENV PATH="$JAVA_HOME/bin:${PATH}"
+
+RUN chmod +x /opt/sonarqube/bin/linux-x86-64/sonar.sh
+
+RUN chmod +x start.sh
+
+RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
+
+EXPOSE 9000
+
+CMD /user/app/start.sh ; sleep infinity
 
 # select image maven
 FROM maven:3.6.3-jdk-11-slim
