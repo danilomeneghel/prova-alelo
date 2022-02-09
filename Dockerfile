@@ -1,4 +1,4 @@
-# select image sonarqube
+# select image openjdk
 FROM openjdk:11-jre-slim
 
 RUN apt-get update \
@@ -12,6 +12,7 @@ ENV SONARQUBE_HOME /opt/sonarqube
 # Http port
 EXPOSE 9000
 
+# install sonarqube
 RUN set -x \
     && cd /opt \
     && curl -o sonarqube.zip -fSL https://downloads.sonarsource.com/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip \
