@@ -1,7 +1,7 @@
 # select image sonarqube
-FROM sonarqube:7.8-community
+FROM sonarqube:7.9.6-community
 
-COPY plugins /opt/sonarqube/extensions/plugins
+COPY plugins/** $SONARQUBE_HOME/extensions/plugins/
 COPY openjdk-11.0.3.tar.gz .
 
 USER root
