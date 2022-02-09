@@ -16,17 +16,10 @@ pipeline {
        	      sh "docker build -t prova-alelo ."
        	   }
        }
-       stage('Docker Build SonarQube') {
-       	   steps {
-       	      echo "Starting the Build SonarQube"
-       	      sh "docker build -t bitnami/sonarqube:latest 'https://github.com/bitnami/bitnami-docker-sonarqube.git#master:9/debian-10'"
-       	   }
-       }
        stage('Docker Run') {
            steps {
               echo "Starting the Deploy"
               sh "docker run -p 8181:8181 -d prova-alelo"
-              sh "docker run -p 9000:9000 -d bitnami/sonarqube"
            }
        }
    } 
