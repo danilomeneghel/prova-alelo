@@ -1,27 +1,41 @@
 # select image sonarqube
-FROM sonarqube:7.8-community
+FROM openjdk:11-jre-slim
 
-COPY plugins /opt/sonarqube/extensions/plugins
-COPY openjdk-11.0.3.tar.gz .
+RUN apt-get update 
+    && apt-get install -y curl gnupg2 unzip 
+    && rm -rf /var/lib/apt/lists/*
 
-USER root
+ENV SONAR_VERSION=7.9.6 
+    SONARQUBE_HOME=/opt/sonarqube 
+    SONARQUBE_JDBC_USERNAME=sonar 
+    SONARQUBE_JDBC_PASSWORD=sonar 
+    SONARQUBE_JDBC_URL=""
 
-RUN \
-tar -xvzf openjdk-11.0.3.tar.gz -C /usr/local && \ 
-rm -rf openjdk-11.0.3.tar.gz 
-
-ENV JAVA_HOME /usr/local/java-11-openjdk-11
-ENV PATH="$JAVA_HOME/bin:${PATH}"
-
-RUN chmod +x -R /opt/sonarqube/bin/
-
-RUN chmod +x start.sh
+# Http port
+EXPOSE 9000
 
 RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
-EXPOSE 9000
+RUN set -x 
+    && cd /opt 
+    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip 
+    && curl -o sonarqube.zip.asc -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc 
+    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip 
+    && unzip -q sonarqube.zip 
+    && mv sonarqube-$SONAR_VERSION sonarqube 
+    && chown -R sonarqube:sonarqube sonarqube 
+    && rm sonarqube.zip* 
+    && rm -rf $SONARQUBE_HOME/bin/*
 
-CMD /user/app/start.sh ; sleep infinity
+VOLUME "$SONARQUBE_HOME/data"
+
+WORKDIR $SONARQUBE_HOME
+COPY run.sh $SONARQUBE_HOME/bin/
+USER sonarqube
+RUN chmod +x ${SONARQUBE_HOME}/bin/run.sh
+RUN useradd sonar
+RUN chown -R sonar /opt/sonarqube
+ENTRYPOINT ["./bin/run.sh"]
 
 # select image maven
 FROM maven:3.6.3-slim
