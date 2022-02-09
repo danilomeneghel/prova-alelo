@@ -5,33 +5,25 @@ RUN apt-get update \
     && apt-get install -y curl gnupg2 unzip \
     && rm -rf /var/lib/apt/lists/*
 
-ENV SONAR_VERSION=7.9.6 \
-    SONARQUBE_HOME=/opt/sonarqube \
-    SONARQUBE_JDBC_USERNAME=sonar \
-    SONARQUBE_JDBC_PASSWORD=sonar \
-    SONARQUBE_JDBC_URL=""
+USER root
+ENV SONARQUBE_VERSION 5.0.1
+ENV SONARQUBE_HOME /opt/sonarqube
 
 # Http port
 EXPOSE 9000
 
-RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
-
 RUN set -x \
     && cd /opt \
-    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
-    && curl -o sonarqube.zip.asc -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
-    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
-    && unzip -q sonarqube.zip \
-    && mv sonarqube-$SONAR_VERSION sonarqube \
-    && chown -R sonarqube:sonarqube sonarqube \
+    && curl -o sonarqube.zip -fSL https://downloads.sonarsource.com/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip \
+    && unzip sonarqube.zip \
+    && mv sonarqube-${SONARQUBE_VERSION} sonarqube \
     && rm sonarqube.zip* \
-    && rm -rf $SONARQUBE_HOME/bin/*
+    && rm -rf ${SONARQUBE_HOME}/bin/*
 
 VOLUME "$SONARQUBE_HOME/data"
 
-WORKDIR $SONARQUBE_HOME
-COPY run.sh $SONARQUBE_HOME/bin/
-USER sonarqube
+WORKDIR ${SONARQUBE_HOME}
+COPY run.sh ${SONARQUBE_HOME}/bin/
 RUN chmod +x ${SONARQUBE_HOME}/bin/run.sh
 RUN useradd sonar
 RUN chown -R sonar /opt/sonarqube
