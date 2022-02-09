@@ -10,11 +10,17 @@ pipeline {
               sh "cd prova-alelo"
            }
        }
-       stage('Docker Deploy') {
+       stage('Docker Build') {
        	   steps {
-       	      echo "Starting the Deploy"
-       	      sh "docker-compose up"
+       	      echo "Starting the Build"
+       	      sh "docker build -t prova-alelo ."
        	   }
+       }
+       stage('Docker Run') {
+           steps {
+              echo "Starting the Deploy"
+              sh "docker run -p 8181:8181 -d prova-alelo"
+           }
        }
    } 
 }
