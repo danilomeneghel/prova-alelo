@@ -1,12 +1,14 @@
 # select image sonarqube
 FROM openjdk:11-jre-slim
 
-RUN apt-get update && apt-get install -y curl gnupg2 unzip
+RUN apt-get update \
+    && apt-get install -y curl gnupg2 unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-ENV SONAR_VERSION=7.9.6 
-    SONARQUBE_HOME=/opt/sonarqube 
-    SONARQUBE_JDBC_USERNAME=sonar 
-    SONARQUBE_JDBC_PASSWORD=sonar 
+ENV SONAR_VERSION=7.9.6 \
+    SONARQUBE_HOME=/opt/sonarqube \
+    SONARQUBE_JDBC_USERNAME=sonar \
+    SONARQUBE_JDBC_PASSWORD=sonar \
     SONARQUBE_JDBC_URL=""
 
 # Http port
@@ -14,15 +16,15 @@ EXPOSE 9000
 
 RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
-RUN set -x 
-    && cd /opt 
-    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip 
-    && curl -o sonarqube.zip.asc -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc 
-    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip 
-    && unzip -q sonarqube.zip 
-    && mv sonarqube-$SONAR_VERSION sonarqube 
-    && chown -R sonarqube:sonarqube sonarqube 
-    && rm sonarqube.zip* 
+RUN set -x \
+    && cd /opt \
+    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+    && curl -o sonarqube.zip.asc -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
+    && unzip -q sonarqube.zip \
+    && mv sonarqube-$SONAR_VERSION sonarqube \
+    && chown -R sonarqube:sonarqube sonarqube \
+    && rm sonarqube.zip* \
     && rm -rf $SONARQUBE_HOME/bin/*
 
 VOLUME "$SONARQUBE_HOME/data"
