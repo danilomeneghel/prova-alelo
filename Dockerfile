@@ -1,5 +1,5 @@
 # select image sonarqube
-FROM sonarqube:8.9-community
+FROM sonarqube:8.4.1-community
 
 COPY sonar-custom-plugin-1.0.jar /opt/sonarqube/extensions/
 
