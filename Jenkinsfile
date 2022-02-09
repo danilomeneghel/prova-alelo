@@ -13,13 +13,13 @@ pipeline {
        stage('Docker Build') {
        	   steps {
        	      echo "Starting the Build"
-       	      sh "docker build -t api ."
+       	      sh "docker build -t prova-alelo ."
        	   }
        }
        stage('Docker Run') {
            steps {
               echo "Starting the Deploy"
-              sh "docker run -p 8181:8181 -d api"
+              sh "docker run -p 8181:8181 -d prova-alelo"
            }
        }
    } 

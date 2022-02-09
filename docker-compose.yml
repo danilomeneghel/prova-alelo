@@ -24,13 +24,14 @@ services:
         #- "ORACLE_PWD=oracle"
         #- "ORACLE_DATABASE=ORCL"
         #- "SOURCE_SCHEMA=ORCL"
-  jenkins:
-    image: jenkins/jenkins
-    ports:
-      - '8282:8080'
-    volumes:
-      - 'jenkins_home:/var/jenkins_home'
-      - '/var/run/docker.sock:/var/run/docker.sock'
-volumes:
-  jenkins_home:
-    driver: local
+  #jenkins:
+    #container_name: jenkins
+    #image: jenkins/jenkins
+    #ports:
+      #- '8282:8080'
+    #volumes:
+      #- 'jenkins_home:/var/jenkins_home'
+      #- '/var/run/docker.sock:/var/run/docker.sock'
+#volumes:
+  #jenkins_home:
+    #driver: local

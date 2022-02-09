@@ -15,6 +15,7 @@ Avaliação técnica de uma API de Cadastro de Produto, desenvolvido em Java com
 - Java JDK 11
 - Apache Maven >= 3.6.3 (Opcional)
 - Docker (Opcional)
+- Jenkins (Opcional)
 
 ## Tecnologias
 
