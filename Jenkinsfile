@@ -3,7 +3,7 @@ pipeline {
    agent any
    
    stages {
-       stage('Checkout') {
+       stage('Checkout Project') {
            steps {
               echo "Starting the Checkout"
               sh "git clone https://github.com/danilomeneghel/prova-alelo.git"
@@ -14,6 +14,14 @@ pipeline {
        	   steps {
        	      echo "Starting the Build Project"
        	      sh "docker build -t prova-alelo ."
+       	   }
+       }
+       stage('Docker Build SonarQube') {
+       	   steps {
+       	      echo "Starting the Build SonarQube"
+       	      sh "cd sonarqube"
+       	      sh "docker build --tag=sonarqube ."
+       	      sh "docker run -p 9000:9000 -ti sonarqube"
        	   }
        }
        stage('Docker Run') {
