@@ -10,11 +10,9 @@ pipeline {
            }
        }
        stage('Docker Build and Run SonarQube') {
+       	   agent { docker 'sonarqube:8.4.1-community' }
        	   steps {
        	      echo "Starting the Build SonarQube"
-       	      dir("prova-alelo/sonarqube/") {
-       	      	sh "pwd"
-       	      }
        	      sh "ls"
        	      sh "docker build --tag=sonarqube ."
        	      sh "docker run -p 9000:9000 -ti sonarqube"
@@ -23,7 +21,6 @@ pipeline {
        stage('Docker Build Project') {
        	   steps {
        	      echo "Starting the Build Project"
-       	      dir("..")
        	      sh "ls"
        	      sh "docker build -t prova-alelo ."
        	   }
