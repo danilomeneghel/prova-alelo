@@ -10,18 +10,19 @@ pipeline {
               sh "cd prova-alelo"
            }
        }
-       stage('Docker Build Project') {
-       	   steps {
-       	      echo "Starting the Build Project"
-       	      sh "docker build -t prova-alelo ."
-       	   }
-       }
-       stage('Docker Build SonarQube') {
+       stage('Docker Build and Run SonarQube') {
        	   steps {
        	      echo "Starting the Build SonarQube"
        	      sh "cd sonarqube"
        	      sh "docker build --tag=sonarqube ."
        	      sh "docker run -p 9000:9000 -ti sonarqube"
+       	   }
+       }
+       stage('Docker Build Project') {
+       	   steps {
+       	      echo "Starting the Build Project"
+       	      sh "cd .."
+       	      sh "docker build -t prova-alelo ."
        	   }
        }
        stage('Docker Run') {
