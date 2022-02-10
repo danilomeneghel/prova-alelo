@@ -15,10 +15,10 @@ pipeline {
        	      sh "pwd"
 	      dir('prova-alelo/sonarqube') {
 	        sh "pwd"
-	        sh "docker build --tag=sonarqube ."
-       	        sh "docker run -p 9000:9000 -ti sonarqube"
+	        sh "docker build -t sonarqube:8.4.1-community ."
+       	        sh "docker run -p 9000:9000 -d sonarqube:8.4.1-community"
 	      }
-	      sh "pwd"
+	      sh "./mvnw clean install sonar:sonar -Dsonar.host.url=http://localhost:9000"
        	   }
        }
        stage('Docker Build Project') {
