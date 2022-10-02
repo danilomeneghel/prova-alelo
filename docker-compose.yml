@@ -1,13 +1,13 @@
 version: '3'
 services:
   api:
-    container_name: api
+    container_name: api-alelo
     build: .
     ports: 
       - "8181:8181"
   sonar:
-    container_name: sonarqube8
-    image: sonarqube:8.4.1-community
+    container_name: sonarqube-latest
+    image: sonarqube:latest
     ports:
       - "9000:9000"
   #oracle:

@@ -67,6 +67,15 @@ Ou via Docker-Compose:
 $ docker-compose up
 ```
 
+Aguarde baixar as dependências e carregar todo o projeto, esse processo é demorado. <br>
+Caso conclua e não rode pela primeira vez, tente novamente executando o mesmo comando. <br>
+
+Para encerrar tudo digite:
+
+```
+$ docker-compose down
+```
+
 ## Swagger 
 
 Documentação da API RESTful: <br>
@@ -75,19 +84,32 @@ http://localhost:8181/swagger-ui.html
 
 ## SonarQube
 
-Para verificar a cobertura de testes, execute o seguinte comando: 
+Para verificar a cobertura de testes, primeiro acesse o seguinte endereço: <br>
+http://localhost:9000
+
+Depois efetue o login preenchendo "admin" no usuário e senha (login padrão). <br>
+Ao se logar crie um novo projeto e gere o token.
+
+Feito isso, entre no container criado da api:
 
 ```
-$ ./mvnw clean install sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=YOUR_TOKEN
+$ docker exec -it api-alelo bash
+```
+
+Execute o seguinte comando do sonar:
+
+```
+$ mvn clean verify sonar:sonar -Dsonar.projectKey=NOME_PROJETO_GERADO -Dsonar.host.url=http://sonarqube-latest:9000 -Dsonar.login=TOKEN_GERADO
 ```
 
 Após executado, acesse o seguinte endereço: <br>
 
-http://localhost:9000/dashboard?id=api%3Aprova-alelo
+http://localhost:9000/dashboard?id=prova-alelo
 
 ## Jenkins
 
-Crie um novo Job do tipo Pipeline, depois escolha "Pipeline script from SCM", em seguida Git e adicione a url do projeto Git com o arquivo Jenkinsfile marcado.
+Instale o Jenkins. 
+Acesse e crie um novo Job do tipo Pipeline, escolha "Pipeline script from SCM", em seguida Git e adicione a url do projeto Git com o arquivo Jenkinsfile marcado.
 Depois clique em Construir (build) para carregar a aplicação.
 
 ## Testes
@@ -100,7 +122,7 @@ $ ./mvnw test
 
 ## Licença
 
-Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
+Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br><br>
 
 
 Desenvolvido por<br>
